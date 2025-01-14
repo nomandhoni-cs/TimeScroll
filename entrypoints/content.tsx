@@ -81,6 +81,10 @@ export default defineContentScript({
 
       const timeSpent = calculateTimeSpent();
       updateDisplay(totalScrollMeters, timeSpent);
+
+      if (Date.now() - lastStorageUpdate >= 60000) {
+        await saveToStorage(totalScrollMeters, timeSpent);
+      }
     };
 
     const handleScroll = (): void => {
@@ -111,7 +115,6 @@ export default defineContentScript({
         if (currentEntry) {
           totalScrollMeters = currentEntry.scrollDistance;
           previousTimeSpent = currentEntry.timeSpent;
-          lastScrollY = window.scrollY || document.documentElement.scrollTop;
         }
         startTime = Date.now();
         updateDisplay(totalScrollMeters, previousTimeSpent);
@@ -131,7 +134,8 @@ export default defineContentScript({
 
     window.addEventListener("scroll", handleScroll);
     const timeUpdateInterval = setInterval(() => {
-      updateDisplay(totalScrollMeters, calculateTimeSpent());
+      const timeSpent = calculateTimeSpent();
+      updateDisplay(totalScrollMeters, timeSpent);
     }, 1000);
 
     await initializeState();
