@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/icon/48.png" alt="TimeScroll Logo" width="128" height="128">
+  <img src="public/icon/48.png" alt="TimeScroll Logo" width="96" height="96">
 </p>
 
 <h1 align="center">TimeScroll - Online Time Tracker</h1>
